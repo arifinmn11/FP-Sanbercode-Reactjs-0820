@@ -1,11 +1,12 @@
 
 import React, { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import axios from 'axios'
+import { Alert } from '@material-ui/lab';
 import { UserContext } from '../Context/UserContext';
 
 
@@ -13,6 +14,7 @@ const Login = () => {
     // const classes = useStyles();
     const [input, setInput] = useState({ email: "", password: "" })
     const [user, setUser] = useContext(UserContext)
+    const [validate, setValidate] = useState({ status: "", name: "", message: "" })
     const handleChange = (e) => {
         var value = e.target.value
         var name = e.target.name
@@ -26,7 +28,7 @@ const Login = () => {
                 break;
             }
 
-            default: { break; } 
+            default: { break; }
         }
     }
 
@@ -45,8 +47,14 @@ const Login = () => {
                         setUser(currentUser)
                         localStorage.setItem("user", JSON.stringify(currentUser))
 
-                        window.location.href = '/'
                     }
+                }).catch((error) => {
+                    var status = {
+                        status: false,
+                        name: 'stat',
+                        message: 'Failed! email or password wrong!'
+                    }
+                    setValidate(status)
                 })
         }
     }
@@ -65,6 +73,7 @@ const Login = () => {
                         <label style={{ color: "white" }}>Password</label>
                         <input style={{ width: "100%" }} type='password' onChange={handleChange} name="password" minLength={8} required />
                     </div>
+                    {(validate.status === false && validate.name === 'stat') ? <Alert severity="warning"> {validate.message} </Alert> : null}
                     <Button
                         type="submit"
                         fullWidth
@@ -76,7 +85,7 @@ const Login = () => {
                 </Button>
                     <Grid container>
                         <Grid item>
-                            <Link href="/register" variant="body2" color="secondary">
+                            <Link to="/register" variant="body2" color="secondary">
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

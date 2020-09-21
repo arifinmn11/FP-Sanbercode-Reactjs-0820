@@ -53,7 +53,7 @@ const Register = () => {
         .then((res) => {
           if (res.status === 201) {
             var token = res.data.token
-            var currentUser = { name: res.data.name, email: res.data.email, token: token }
+            var currentUser = { name: res.data.user.name, email: res.data.user.email, token: token }
             setUser(currentUser)
             localStorage.setItem("user", JSON.stringify(currentUser))
             window.location.href = '/'

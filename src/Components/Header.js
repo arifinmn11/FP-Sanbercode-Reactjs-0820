@@ -13,7 +13,6 @@ const Header = () => {
     localStorage.removeItem('user')
     window.location.href = '/'
   }
-
   return (
     <AppBar position="static" style={{ backgroundColor: "black" }}>
       <Toolbar>
@@ -58,6 +57,9 @@ const Header = () => {
               <>
                 <Button color="inherit">
                   <Link style={styleLinkNavbar} to="/login">Login</Link>
+                </Button>
+                <Button color="inherit">
+                  <Link style={styleLinkNavbar} to="/register">Register</Link>
                 </Button>
               </>
             }
